@@ -4,46 +4,33 @@ import com.google.common.cache.*;
 import org.junit.Test;
 
 import java.util.Random;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 public class CacheTest {
 
-
+    public static Cache<String, String> cache = CacheBuilder.newBuilder()
+            .weakValues()
+            .recordStats()
+            .build();
     @Test
     public void guavaCache() throws ExecutionException, InterruptedException {
-        LoadingCache<String, String> cache = CacheBuilder.newBuilder()
-                .maximumSize(1000)
-                .recordStats()
-                .expireAfterWrite(5, TimeUnit.SECONDS)
-                .refreshAfterWrite(10, TimeUnit.MINUTES)
-                .removalListener(new RemovalListener<String, String>() {
-                    public void onRemoval(RemovalNotification<String, String> notification) {
-                        System.out.println(notification.getKey() + " " + notification.getValue());
-                    }
-                })
-                .build(new CacheLoader<String, String>() {
-                    @Override
-                    public String load(String key) throws Exception {
-                        return fetchFromDB();
-                    }
-                });
-        cache.put("aaa", "1111");
-        cache.put("bbb", "1111");
-        cache.put("ccc", "1111");
-        cache.put("ddd", "1111");
-        cache.put("eee", "1111");
-        cache.put("fff", "1111");
-        TimeUnit.SECONDS.sleep(8);
 
-        cache.get("aaa");
-        cache.get("bbb");
-        cache.get("aaa");
-        cache.get("ccc");
-        cache.get("ddd");
+        cache.put("aaa", "1111");
+
+        TimeUnit.SECONDS.sleep(3);
+
+        System.out.println(cache.get("aaa", new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                return null;
+            }
+        }));
     }
 
-    public static String fetchFromDB() {
+    public static String fetchFromDB() throws InterruptedException {
+//        TimeUnit.SECONDS.sleep(3);
         return String.valueOf(new Random().nextInt());
     }
 }
