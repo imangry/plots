@@ -18,7 +18,7 @@ public class EventBusTest {
 
             if (val % 2 == 1) {
                 eventBus.post(new TestEvent(val));
-            }else {
+            } else {
                 eventBus.post(new TestEvent2("string"));
             }
         }
@@ -42,6 +42,7 @@ class TestEvent {
         this.message = message;
     }
 }
+
 class TestEvent2 {
     private String message;
 
@@ -67,3 +68,4 @@ class EventListener {
         System.out.println("message is a string");
     }
 }
+
