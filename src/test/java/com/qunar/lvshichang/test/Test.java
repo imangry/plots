@@ -9,7 +9,7 @@ public class Test {
             test();
 
         } catch (RuntimeException e) {
-
+            throw new IllegalArgumentException();
         }
     }
 
