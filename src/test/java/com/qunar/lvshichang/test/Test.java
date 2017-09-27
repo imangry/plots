@@ -5,18 +5,17 @@ public class Test {
 
 
     public static void main(String[] args) {
+        try {
+            test();
 
-//        拆装箱 TODO
-        Object o1 = true ? new Integer(1) : new Double(3.0);
-        System.out.println(o1);
+        } catch (RuntimeException e) {
 
-
-        String str = new String("aaa");
-
-        str.intern();
-        System.out.println();
-
+        }
     }
 
+
+    public static void test(){
+        throw new IllegalArgumentException();
+    }
 
 }
