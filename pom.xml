@@ -2,13 +2,24 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.qunar.lvshichang</groupId>
-    <artifactId>campus</artifactId>
+    <artifactId>plots</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
 
-    <name>campus Maven Webapp</name>
+    <name>plots</name>
     <url>http://maven.apache.org</url>
     <dependencies>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.37</version>
+        </dependency>
         <!--log-->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -77,7 +88,7 @@
     </dependencies>
     
     <build>
-        <finalName>campus</finalName>
+        <finalName>plots</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
