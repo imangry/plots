@@ -16,45 +16,31 @@ import java.util.concurrent.CountDownLatch;
  * User: lvshi
  */
 public class SkipListConsistent<T> {
-    static class Node<T> {
-        private T obj;
-        private int weight;
 
-        public Node(T obj, int weight) {
-            this.obj = obj;
-            this.weight = weight;
-        }
-    }
-
-    private ConcurrentSkipListMap<Integer, T> skipListMap = new ConcurrentSkipListMap<>();
+    private ConcurrentSkipListMap<Integer, T> skipListMap;
 
     public SkipListConsistent() {
-    }
-
-    public SkipListConsistent(List<Node<T>> nodes) {
-        for (Node<T> node : nodes) {
-            addNode(node);
-        }
+        skipListMap = new ConcurrentSkipListMap<>();
     }
 
 
-    public void addNode(Node<T> node) {
-        for (int i = 0; i < node.weight; i++) {
+    public void addNode(T obj, int weight) {
+        for (int i = 0; i < weight; i++) {
             skipListMap.put(Hashing.murmur3_32()
-                    .hashString(node.obj.toString() + i, Charsets.UTF_8)
-                    .asInt(), node.obj);
+                    .hashString(obj.toString() + i, Charsets.UTF_8)
+                    .asInt(), obj);
         }
     }
 
-    public void delNode(Node<T> node) {
-        for (int i = 0; i < node.weight; i++) {
+    public void delNode(T obj, int weight) {
+        for (int i = 0; i < weight; i++) {
             skipListMap.remove(Hashing.murmur3_32()
-                    .hashString(node.obj.toString() + i, Charsets.UTF_8)
+                    .hashString(obj.toString() + i, Charsets.UTF_8)
                     .asInt());
         }
     }
 
-    public T get(Object key) {
+    public T get(T key) {
         int hashKey = Hashing.murmur3_32().hashString(key.toString(), Charsets.UTF_8).asInt();
         Map.Entry<Integer, T> entry = skipListMap.ceilingEntry(hashKey);
         if (entry == null) {
@@ -71,26 +57,24 @@ public class SkipListConsistent<T> {
 
         SkipListConsistent<String> consistent = new SkipListConsistent<>();
 
-        consistent.addNode(new Node<>("www.google.com", 1000));
-        Node<String> node = new Node<>("www.baidu.com", 1000);
-        consistent.addNode(node);
-        Node<String> node1 = new Node<>("www.sogo.com", 1000);
-        consistent.addNode(node1);
+        consistent.addNode("www.google.com", 1000);
+        consistent.addNode("www.baidu.com", 1000);
+        consistent.addNode("www.sogo.com", 1000);
 
         CountDownLatch latch = new CountDownLatch(2);
 
         new Thread(() -> {
-            testSpeed(consistent, node, true);
+            testSpeed(consistent, "www.google.com", 1000, true);
             latch.countDown();
         }).start();
         new Thread(() -> {
-            testSpeed(consistent, node, false);
+            testSpeed(consistent, "www.baidu.com", 1000, false);
             latch.countDown();
         }).start();
         latch.await();
     }
 
-    private static void testSpeed(SkipListConsistent<String> consistent, Node<String> node, boolean del) {
+    private static void testSpeed(SkipListConsistent<String> consistent, String node, int weight, boolean del) {
         long start = System.currentTimeMillis();
         Map<String, Integer> result = Maps.newHashMap();
 
@@ -103,9 +87,9 @@ public class SkipListConsistent<T> {
                 result.put(v, 0);
             if (i % 300 == 0) {
                 if (del)
-                    consistent.delNode(node);
+                    consistent.delNode(node, weight);
                 else
-                    consistent.addNode(node);
+                    consistent.addNode(node, weight);
             }
         }
 

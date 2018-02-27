@@ -1,4 +1,4 @@
-package com.qunar;
+package com.qunar.concurrent;
 
 import com.google.common.collect.Lists;
 
