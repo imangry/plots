@@ -7,7 +7,7 @@ import com.alibaba.fastjson.TypeReference;
  * Date: 18/01/03
  * User: lvshi
  */
-public class FastjsonTest {
+public class FastjsonGeneric {
 
     static class Basic<T> {
         private int status;
@@ -77,6 +77,7 @@ public class FastjsonTest {
         String str = JSON.toJSONString(basic);
         System.out.println(str);
 
+        //JSON反序列化 泛型
         Basic basic1 = JSON.parseObject(str, new TypeReference<Basic<Advance>>() {});
         System.out.println(basic1);
 

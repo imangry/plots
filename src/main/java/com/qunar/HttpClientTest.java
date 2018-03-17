@@ -19,6 +19,5 @@ public class HttpClientTest {
         HttpResponse resp = httpClient.execute(httpGet);
         String result = EntityUtils.toString(resp.getEntity());
         System.out.println(result);
-
     }
 }

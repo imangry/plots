@@ -43,9 +43,7 @@ public class KafkaQPS {
                         producer.send(record).get();
                         longAdder.increment();
 
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
+                    } catch (InterruptedException | ExecutionException e) {
                         e.printStackTrace();
                     }
 

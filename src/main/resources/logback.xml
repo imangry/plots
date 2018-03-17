@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
-
-
     <property name="encoding" value="UTF-8"/>
     <property name="std-pattern" value="%d{HH:mm:ss.SSS} [%t] %p %logger{36}.%M:%L]-%m%n"/>
 

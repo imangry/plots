@@ -2,8 +2,8 @@ package com.qunar.lvshichang.nami;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.qunar.nami.ant.AntPathMatcher;
-import com.qunar.nami.ant.PathMatcher;
+import com.qunar.path.ant.AntPathMatcher;
+import com.qunar.path.ant.PathMatcher;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 

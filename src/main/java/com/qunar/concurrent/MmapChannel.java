@@ -8,7 +8,7 @@ import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
-public class nio {
+public class MmapChannel {
     public static void main(String[] args) throws IOException {
         File temp = File.createTempFile("holy", null);
         RandomAccessFile file = new RandomAccessFile(temp, "rw");

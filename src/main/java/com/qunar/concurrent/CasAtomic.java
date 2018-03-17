@@ -8,10 +8,7 @@ import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
  * User: lvshi
  */
 
-
-public class CASAtomic {
-
-
+public class CasAtomic {
     static class CASInteger {
         private volatile int value;
         private static final AtomicIntegerFieldUpdater<CASInteger> updater = AtomicIntegerFieldUpdater.newUpdater(CASInteger.class, "value");

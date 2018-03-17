@@ -1,4 +1,4 @@
-package com.qunar.nami.ant;
+package com.qunar.path.ant;
 
 import java.util.Comparator;
 import java.util.LinkedHashMap;

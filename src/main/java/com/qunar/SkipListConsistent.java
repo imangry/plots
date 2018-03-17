@@ -6,7 +6,6 @@ import com.google.common.collect.Maps;
 import com.google.common.hash.Hashing;
 import org.apache.commons.lang3.RandomStringUtils;
 
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.CountDownLatch;

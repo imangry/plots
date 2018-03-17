@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
  * Date: 17/12/27
  * User: lvshi
  */
-public class waitNotify {
+public class WaitNotify {
     public static final LinkedList<String> queue = Lists.newLinkedList();
     public static final Random random = new Random();
 

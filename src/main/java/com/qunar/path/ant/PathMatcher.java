@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.qunar.nami.ant;
+package com.qunar.path.ant;
 
 import java.util.Comparator;
 import java.util.Map;
