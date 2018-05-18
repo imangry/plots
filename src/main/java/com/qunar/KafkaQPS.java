@@ -2,6 +2,7 @@ package com.qunar;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,17 +38,21 @@ public class KafkaQPS {
             EXECUTOR.submit(() -> {
                 KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
                 ProducerRecord<String, String> record = new ProducerRecord<>("workerQueueH0-0", 0, "", "test");
+                try {
+                    final RecordMetadata recordMetadata = producer.send(record).get();
+                    producer.send(record, (metadata, exception) -> {
+                        if (exception != null) {
+                            exception.printStackTrace();
+                        }
 
-                for (int i = 0; i < 100000000; i++) {
-                    try {
-                        producer.send(record).get();
-                        longAdder.increment();
+                    });
 
-                    } catch (InterruptedException | ExecutionException e) {
-                        e.printStackTrace();
-                    }
 
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
                 }
+
+
             });
         }
     }

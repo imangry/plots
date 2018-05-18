@@ -18,8 +18,6 @@ public class WaitNotify {
 
         new Producer().start();
         new Consumer().start();
-        new Consumer().start();
-        new Consumer().start();
     }
 
     private static void waitNotify() {
@@ -73,7 +71,13 @@ public class WaitNotify {
                             e.printStackTrace();
                         }
                     }
+
                     queue.addLast(String.valueOf(random.nextInt()));
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(5);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     queue.notifyAll();
                     System.out.println("producer produce,queue size " + queue.size());
                 }
@@ -95,6 +99,11 @@ public class WaitNotify {
                         }
                     }
                     queue.removeFirst();
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(5);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     queue.notifyAll();
                     System.out.println("consumer consume,queue size " + queue.size());
                 }
